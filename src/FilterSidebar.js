@@ -113,7 +113,6 @@ class FilterSidebar extends Component{
             />
             <ControlLabel>SKU</ControlLabel>
             <FormControl
-              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
               type="text"
               value={this.state.sku}
               placeholder="Enter Dimensions"
