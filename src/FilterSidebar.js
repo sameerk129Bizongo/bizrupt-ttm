@@ -8,12 +8,13 @@ class FilterSidebar extends Component{
     super(props);
 
     this.state = {
-      dimension: "",
+      spec: "",
       sku: "",
     };
 
     this.handleProductNameInput = this.handleProductNameInput.bind(this);
     this.handleDimensionInput = this.handleDimensionInput.bind(this);
+    this.handleSpecInput = this.handleSpecInput.bind(this);
     this.renderCategories = this.renderCategories.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.renderSubCategories = this.renderSubCategories.bind(this);
@@ -34,9 +35,18 @@ class FilterSidebar extends Component{
     console.log('handleDimensionInput');
     console.dir({selected: selected});
     if (selected && selected.length > 0) {
-      this.setState({dimension: selected[0].value});
+      this.props.onDimensionSelection(selected[0].value);
     }
-    else this.setState({dimension: ''});
+    else this.props.onDimensionSelection('');
+  }
+
+  handleSpecInput(selected) {
+    console.log('handleSpecInput');
+    console.dir({selected: selected});
+    if (selected && selected.length > 0) {
+      this.setState({spec: selected[0].value});
+    }
+    else this.setState({spec: ''});
   }
 
   handleSkuInput(event) {
@@ -113,6 +123,13 @@ class FilterSidebar extends Component{
               placeholder="Enter Dimension"
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct}
             />
+            <ControlLabel>Specification</ControlLabel>
+            <Typeahead
+              options={this.props.specsList}
+              onChange={this.handleSpecInput}
+              placeholder="Enter Specs"
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct || !this.props.selectedDimension}
+            />
             <ControlLabel>SKU</ControlLabel>
             <FormControl
               type="text"
@@ -132,13 +149,16 @@ FilterSidebar.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
   selectedSubCategory: PropTypes.string.isRequired,
   selectedProduct: PropTypes.string.isRequired,
+  selectedDimension: PropTypes.string.isRequired,
   categoriesList: PropTypes.array.isRequired,
   subCategoriesList: PropTypes.array.isRequired,
   productsList: PropTypes.array.isRequired,
   dimensionsList: PropTypes.array.isRequired,
+  specsList: PropTypes.array.isRequired,
   onCategorySelection: PropTypes.func.isRequired,
   onSubCategorySelection: PropTypes.func.isRequired,
   onProductSelection: PropTypes.func.isRequired,
+  onDimensionSelection: PropTypes.func.isRequired,
   onFilterApply: PropTypes.func.isRequired,
 };
 

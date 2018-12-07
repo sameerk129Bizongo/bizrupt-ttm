@@ -1,10 +1,12 @@
 import {capitalizeFirstLetter} from './utils';
-const database = require('./database.json');
+const database = require('./data.json');
+const category_data = database['category'];
+const sku_data = database['sku'];
 
 export const databaseFunc = () => {
 
   const getCategoriesList = () => {
-    return (Object.keys(database).map(category => {
+    return (Object.keys(category_data).map(category => {
       return {
         label: capitalizeFirstLetter(category),
         value: category,
@@ -13,7 +15,7 @@ export const databaseFunc = () => {
   };
 
   const getSubCategoriesList = categoryName => {
-    return (Object.keys(database[categoryName]).map(subCategory => {
+    return (Object.keys(category_data[categoryName]).map(subCategory => {
       return {
         label: capitalizeFirstLetter(subCategory),
         value: subCategory,
@@ -22,7 +24,7 @@ export const databaseFunc = () => {
   };
 
   const getProductsList = (categoryName, subCategoryName) => {
-    return (Object.keys(database[categoryName][subCategoryName]).map(product => {
+    return (Object.keys(category_data[categoryName][subCategoryName]).map(product => {
       return {
         label: capitalizeFirstLetter(product),
         value: product,
@@ -31,7 +33,7 @@ export const databaseFunc = () => {
   };
 
   const getDimensionsList = (categoryName, subCategoryName, productName) => {
-    return (Object.keys(database[categoryName][subCategoryName][productName]).map(dimension => {
+    return (Object.keys(category_data[categoryName][subCategoryName][productName]).map(dimension => {
       return {
         label: dimension,
         value: dimension,
@@ -39,8 +41,42 @@ export const databaseFunc = () => {
     }));
   };
 
+  const getSpecsList = (categoryName, subCategoryName, productName, dimensionName) => {
+    return (Object.keys(category_data[categoryName][subCategoryName][productName][dimensionName]).map(spec => {
+      return {
+        label: spec,
+        value: spec,
+      }
+    }));
+  };
+
+  const getOneMonth = (categoryName, subCategoryName, productName, dimensionName, specName) => {
+    return category_data[categoryName][subCategoryName][productName][dimensionName][specName]['one_month'];
+  };
+
+  const getThreeMonth = (categoryName, subCategoryName, productName, dimensionName, specName) => {
+    return category_data[categoryName][subCategoryName][productName][dimensionName][specName]['three_month'];
+  };
+
+  const getSixMonth = (categoryName, subCategoryName, productName, dimensionName, specName) => {
+    return category_data[categoryName][subCategoryName][productName][dimensionName][specName]['six_month'];
+  };
+
+  const getOneYear = (categoryName, subCategoryName, productName, dimensionName, specName) => {
+    return category_data[categoryName][subCategoryName][productName][dimensionName][specName]['one_year'];
+  };
+
+  const getSKUsList = () => {
+    return (Object.keys(sku_data).map(sku => {
+      return {
+        label: sku,
+        value: sku,
+      }
+    }));
+  };
+
   return {
-    getCategoriesList, getSubCategoriesList, getProductsList, getDimensionsList,
+    getCategoriesList, getSubCategoriesList, getProductsList, getDimensionsList, getSpecsList
   }
 
 };
