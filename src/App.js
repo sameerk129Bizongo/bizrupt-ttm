@@ -12,12 +12,16 @@ class App extends Component {
     this.state = {
       selectedCategory: '',
       selectedSubCategory: '',
+      product: '',
     };
 
     this.selectCategory = this.selectCategory.bind(this);
     this.selectSubCategory = this.selectSubCategory.bind(this);
+    this.selectProduct = this.selectProduct.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     this.getSubCategories = this.getSubCategories.bind(this);
+    this.getProducts = this.getProducts.bind(this);
+    this.getDimensions = this.getDimensions.bind(this);
   }
 
   getSubCategories() {
@@ -38,6 +42,19 @@ class App extends Component {
     else return [];
   }
 
+  getDimensions() {
+    console.log('getDimensions');
+    console.dir({State: this.state});
+    if (this.state.selectedCategory && this.state.selectedSubCategory && this.state.product) {
+      return database.getDimensionsList(
+        this.state.selectedCategory,
+        this.state.selectedSubCategory,
+        this.state.product
+      )
+    }
+    else return [];
+  }
+
   selectCategory(value) {
     console.log('selectCategory');
     console.dir({value: value});
@@ -48,6 +65,12 @@ class App extends Component {
     console.log('selectSubCategory');
     console.dir({value: value});
     this.setState({selectedSubCategory: value});
+  }
+
+  selectProduct(value) {
+    console.log('selectProduct');
+    console.dir({value: value});
+    this.setState({product: value});
   }
 
   applyFilter(filters) {
@@ -61,11 +84,14 @@ class App extends Component {
         <FilterSidebar
           selectedCategory={this.state.selectedCategory}
           selectedSubCategory={this.state.selectedSubCategory}
+          selectedProduct={this.state.product}
           categoriesList={database.getCategoriesList()}
           subCategoriesList={this.getSubCategories()}
           productsList={this.getProducts()}
+          dimensionsList={this.getDimensions()}
           onCategorySelection={this.selectCategory}
           onSubCategorySelection={this.selectSubCategory}
+          onProductSelection={this.selectProduct}
           onFilterApply={this.applyFilter}
         />
       </div>

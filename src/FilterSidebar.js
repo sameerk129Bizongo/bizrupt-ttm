@@ -8,12 +8,12 @@ class FilterSidebar extends Component{
     super(props);
 
     this.state = {
-      productName: "",
       dimension: "",
       sku: "",
     };
 
     this.handleProductNameInput = this.handleProductNameInput.bind(this);
+    this.handleDimensionInput = this.handleDimensionInput.bind(this);
     this.renderCategories = this.renderCategories.bind(this);
     this.onSelectCategory = this.onSelectCategory.bind(this);
     this.renderSubCategories = this.renderSubCategories.bind(this);
@@ -25,15 +25,18 @@ class FilterSidebar extends Component{
     console.log('handleProductNameInput');
     console.dir({selected: selected});
     if (selected && selected.length > 0) {
-      this.setState({productName: selected[0].value});
+      this.props.onProductSelection(selected[0].value);
     }
-    else this.setState({productName: ''});
+    else this.props.onProductSelection('');
   }
 
-  handleDimensionInput(event) {
+  handleDimensionInput(selected) {
     console.log('handleDimensionInput');
-    console.dir({value: event.target.value});
-    this.setState({dimension: event.target.value});
+    console.dir({selected: selected});
+    if (selected && selected.length > 0) {
+      this.setState({dimension: selected[0].value});
+    }
+    else this.setState({dimension: ''});
   }
 
   handleSkuInput(event) {
@@ -104,12 +107,11 @@ class FilterSidebar extends Component{
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
             />
             <ControlLabel>Dimension</ControlLabel>
-            <FormControl
-              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
-              type="text"
-              value={this.state.dimension}
-              placeholder="Enter Dimensions"
+            <Typeahead
+              options={this.props.dimensionsList}
               onChange={this.handleDimensionInput}
+              placeholder="Enter Dimension"
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct}
             />
             <ControlLabel>SKU</ControlLabel>
             <FormControl
@@ -129,11 +131,14 @@ class FilterSidebar extends Component{
 FilterSidebar.propTypes = {
   selectedCategory: PropTypes.string.isRequired,
   selectedSubCategory: PropTypes.string.isRequired,
+  selectedProduct: PropTypes.string.isRequired,
   categoriesList: PropTypes.array.isRequired,
   subCategoriesList: PropTypes.array.isRequired,
   productsList: PropTypes.array.isRequired,
+  dimensionsList: PropTypes.array.isRequired,
   onCategorySelection: PropTypes.func.isRequired,
   onSubCategorySelection: PropTypes.func.isRequired,
+  onProductSelection: PropTypes.func.isRequired,
   onFilterApply: PropTypes.func.isRequired,
 };
 
