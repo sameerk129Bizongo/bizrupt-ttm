@@ -29,6 +29,15 @@ class App extends Component {
     else return [];
   }
 
+  getProducts() {
+    console.log('getProducts');
+    console.dir({state: this.state});
+    if (this.state.selectedCategory && this.state.selectedSubCategory) {
+      return database.getProductsList(this.state.selectedCategory, this.state.selectedSubCategory);
+    }
+    else return [];
+  }
+
   selectCategory(value) {
     console.log('selectCategory');
     console.dir({value: value});
@@ -54,6 +63,7 @@ class App extends Component {
           selectedSubCategory={this.state.selectedSubCategory}
           categoriesList={database.getCategoriesList()}
           subCategoriesList={this.getSubCategories()}
+          productsList={this.getProducts()}
           onCategorySelection={this.selectCategory}
           onSubCategorySelection={this.selectSubCategory}
           onFilterApply={this.applyFilter}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Form, Button, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {Typeahead} from 'react-bootstrap-typeahead';
 
 class FilterSidebar extends Component{
   constructor(props){
@@ -20,10 +21,13 @@ class FilterSidebar extends Component{
     this.handleApplyFilterClick = this.handleApplyFilterClick.bind(this);
   }
 
-  handleProductNameInput(event) {
+  handleProductNameInput(selected) {
     console.log('handleProductNameInput');
-    console.dir({value: event.target.value});
-    this.setState({productName: event.target.value});
+    console.dir({selected: selected});
+    if (selected && selected.length > 0) {
+      this.setState({productName: selected[0].value});
+    }
+    else this.setState({productName: ''});
   }
 
   handleDimensionInput(event) {
@@ -68,8 +72,7 @@ class FilterSidebar extends Component{
   }
 
   render(){
-    console.log('Props are:');
-    console.dir(this.props);
+    console.dir({Props: this.props, State: this.state});
     return(
       <div style={{width: '30%'}}>
         <Form>
@@ -94,12 +97,11 @@ class FilterSidebar extends Component{
               {this.renderSubCategories()}
             </FormControl>
             <ControlLabel>Product Name</ControlLabel>
-            <FormControl
-              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
-              type="text"
-              value={this.state.productName}
-              placeholder="Enter Product Name"
+            <Typeahead
+              options={this.props.productsList}
               onChange={this.handleProductNameInput}
+              placeholder="Enter Product Name"
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
             />
             <ControlLabel>Dimension</ControlLabel>
             <FormControl
@@ -123,8 +125,6 @@ class FilterSidebar extends Component{
       </div>
     )
   }
-
-
 }
 
 FilterSidebar.propTypes = {
@@ -132,6 +132,7 @@ FilterSidebar.propTypes = {
   selectedSubCategory: PropTypes.string.isRequired,
   categoriesList: PropTypes.array.isRequired,
   subCategoriesList: PropTypes.array.isRequired,
+  productsList: PropTypes.array.isRequired,
   onCategorySelection: PropTypes.func.isRequired,
   onSubCategorySelection: PropTypes.func.isRequired,
   onFilterApply: PropTypes.func.isRequired,
