@@ -21,8 +21,8 @@ export const databaseFunc = () => {
     }));
   };
 
-  const getProductsList = (category, subCategory) => {
-    return (Object.keys(database[category][subCategory]).map(product => {
+  const getProductsList = (categoryName, subCategoryName) => {
+    return (Object.keys(database[categoryName][subCategoryName]).map(product => {
       return {
         label: capitalizeFirstLetter(product),
         value: product,
@@ -30,8 +30,17 @@ export const databaseFunc = () => {
     }));
   };
 
+  const getDimensionsList = (categoryName, subCategoryName, productName) => {
+    return (Object.keys(database[categoryName][subCategoryName][productName]).map(dimension => {
+      return {
+        label: dimension,
+        value: dimension,
+      }
+    }));
+  };
+
   return {
-    getCategoriesList, getSubCategoriesList, getProductsList
+    getCategoriesList, getSubCategoriesList, getProductsList, getDimensionsList,
   }
 
 };
