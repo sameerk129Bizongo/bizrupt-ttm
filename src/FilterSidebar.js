@@ -40,7 +40,7 @@ class FilterSidebar extends Component{
 
   renderCategories() {
     return this.props.categoriesList.map(categoryObj => {
-      return <option key={categoryObj.value}>{categoryObj.label}</option>
+      return <option key={categoryObj.value} value={categoryObj.value}>{categoryObj.label}</option>
     });
   }
 
@@ -52,7 +52,7 @@ class FilterSidebar extends Component{
 
   renderSubCategories() {
     return this.props.subCategoriesList.map(subCategoryObj => {
-      return <option key={subCategoryObj.value}>{subCategoryObj.label}</option>
+      return <option key={subCategoryObj.value} value={subCategoryObj.value}>{subCategoryObj.label}</option>
     });
   }
 

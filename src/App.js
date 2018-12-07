@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import FilterSidebar from './FilterSidebar';
+import {databaseFunc} from './database';
 
-const categoriesList = [{
-  value: 'temp',
-  label: 'Temp',
-}];
-
-const subCategoriesList = [{
-  value: 'temp',
-  label: 'Temp',
-}];
+const database = databaseFunc();
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +17,16 @@ class App extends Component {
     this.selectCategory = this.selectCategory.bind(this);
     this.selectSubCategory = this.selectSubCategory.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
+    this.getSubCategories = this.getSubCategories.bind(this);
+  }
+
+  getSubCategories() {
+    console.log('getSubCategories');
+    console.dir({state: this.state});
+    if (this.state.selectedCategory) {
+      return database.getSubCategoriesList(this.state.selectedCategory);
+    }
+    else return [];
   }
 
   selectCategory(value) {
@@ -49,8 +52,8 @@ class App extends Component {
         <FilterSidebar
           selectedCategory={this.state.selectedCategory}
           selectedSubCategory={this.state.selectedSubCategory}
-          categoriesList={categoriesList}
-          subCategoriesList={subCategoriesList}
+          categoriesList={database.getCategoriesList()}
+          subCategoriesList={this.getSubCategories()}
           onCategorySelection={this.selectCategory}
           onSubCategorySelection={this.selectSubCategory}
           onFilterApply={this.applyFilter}
