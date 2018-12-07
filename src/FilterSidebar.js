@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Button, FormControl, FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap';
+import {Form, Button, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 class FilterSidebar extends Component{
@@ -7,9 +7,9 @@ class FilterSidebar extends Component{
     super(props);
 
     this.state = {
-      productName: null,
-      subCategory: null,
-      Category: null,
+      productName: "",
+      dimension: "",
+      sku: "",
     };
 
     this.handleProductNameInput = this.handleProductNameInput.bind(this);
@@ -21,9 +21,21 @@ class FilterSidebar extends Component{
   }
 
   handleProductNameInput(event) {
-    console.log('value of input is');
+    console.log('handleProductNameInput');
     console.dir({value: event.target.value});
     this.setState({productName: event.target.value});
+  }
+
+  handleDimensionInput(event) {
+    console.log('handleDimensionInput');
+    console.dir({value: event.target.value});
+    this.setState({dimension: event.target.value});
+  }
+
+  handleSkuInput(event) {
+    console.log('handleSkuInput');
+    console.dir({value: event.target.value});
+    this.setState({sku: event.target.value});
   }
 
   renderCategories() {
@@ -32,10 +44,10 @@ class FilterSidebar extends Component{
     });
   }
 
-  onSelectCategory() {
+  onSelectCategory(event) {
     console.log('onSelectCategory');
-    this.props.onCategorySelection();
-
+    console.dir({value: event.target.value});
+    this.props.onCategorySelection(event.target.value);
   }
 
   renderSubCategories() {
@@ -44,40 +56,66 @@ class FilterSidebar extends Component{
     });
   }
 
-  onSelectSubCategory() {
+  onSelectSubCategory(event) {
     console.log('onSelectSubCategory');
-    this.props.onSubCategorySelection();
+    console.dir({value: event.target.value});
+    this.props.onSubCategorySelection(event.target.value);
   }
 
   handleApplyFilterClick() {
     console.log('handleApplyFilterClick');
+    this.props.onFilterApply(this.state);
   }
 
   render(){
+    console.log('Props are:');
+    console.dir(this.props);
     return(
       <div style={{width: '30%'}}>
         <Form>
           <FormGroup>
             <ControlLabel>Category</ControlLabel>
             <FormControl
-              onSelect={this.onSelectCategory}
+              onChange={this.onSelectCategory}
+              value={this.props.selectedCategory}
               componentClass="select"
               placeholder="Select Category">
+              <option value={null} defaultValue>Select...</option>
               {this.renderCategories()}
             </FormControl>
             <ControlLabel>SubCategory</ControlLabel>
             <FormControl
-              onSelect={this.onSelectSubCategory}
+              disabled={!this.props.selectedCategory}
+              onChange={this.onSelectSubCategory}
               componentClass="select"
+              value={this.props.selectedSubCategory}
               placeholder="Select SubCategory">
+              <option value={null} defaultValue>Select...</option>
               {this.renderSubCategories()}
             </FormControl>
             <ControlLabel>Product Name</ControlLabel>
             <FormControl
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
               type="text"
               value={this.state.productName}
               placeholder="Enter Product Name"
               onChange={this.handleProductNameInput}
+            />
+            <ControlLabel>Dimension</ControlLabel>
+            <FormControl
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
+              type="text"
+              value={this.state.dimension}
+              placeholder="Enter Dimensions"
+              onChange={this.handleDimensionInput}
+            />
+            <ControlLabel>SKU</ControlLabel>
+            <FormControl
+              disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
+              type="text"
+              value={this.state.sku}
+              placeholder="Enter Dimensions"
+              onChange={this.handleSkuInput}
             />
             <Button onClick={this.handleApplyFilterClick}>Apply</Button>
           </FormGroup>
@@ -90,10 +128,13 @@ class FilterSidebar extends Component{
 }
 
 FilterSidebar.propTypes = {
+  selectedCategory: PropTypes.string.isRequired,
+  selectedSubCategory: PropTypes.string.isRequired,
   categoriesList: PropTypes.array.isRequired,
   subCategoriesList: PropTypes.array.isRequired,
   onCategorySelection: PropTypes.func.isRequired,
   onSubCategorySelection: PropTypes.func.isRequired,
+  onFilterApply: PropTypes.func.isRequired,
 };
 
 export default FilterSidebar;
