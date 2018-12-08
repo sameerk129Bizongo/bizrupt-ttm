@@ -1,0 +1,20 @@
+{
+  "category1": {
+    "subCategory1": {
+      "product1": {
+        "1cm x 2cm x 3cm": {
+
+        }
+      }
+    }
+  },
+  "category2": {
+    "subCategory2": {
+      "product2": {
+        "1cm x 2cm x 3cm": {
+
+        }
+      }
+    }
+  }
+}

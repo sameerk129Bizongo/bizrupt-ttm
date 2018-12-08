@@ -3,17 +3,126 @@
   display: flex;
 }
 
-.filter-details {
-  padding: 10px;
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: #F2F4F8;
 }
-.filter-controls{
+.containerx {
+  background: #F2F4F8;
   display: flex;
-  flex: 0.6;
-  flex-basis: 50%;
-  justify-content: space-between;
-  align-items: baseline;
-  width: 42%;
+  width: 100%;
+  margin: 0 !important;
 }
+.dropdown-text-bold{
+  margin-top: 10px;
+  color: #747EA9;
+  font-size: 13px;
+  flex-basis: 150px;
+  margin-left: 8px;
+  font-weight: bolder;
+}
+.left-container {
+  flex-basis: 40%;
+  height: 100vh;
+  padding: 20px;
+  padding-top: 100px;
+  background: #F2F4F8;
+}
+.right-container {
+  flex-basis: 70%;
+  margin-left: 24px;
+}
+.right-container > h2 {
+  color: #3E4977;
+  font-size: 30px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+.right-filter {
+  display: flex;
+  justify-content: flex-end;
+}
+.dropdown {
+  width: 160px;
+  height: 36px;
+  background: white;
+  box-shadow: rgb(237, 231, 231) 0px 1px 8px 0px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.dropdown-text {
+  color: #747EA9;
+  font-size: 13px;
+  flex-basis: 150px;
+  margin-left: 8px;
+}
+.dropdown-arrow {
+  border-left: 1px solid #F2F4F8;
+}
+.dropdown-arrow img {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  margin-top: 24px;
+}
+.checkbox-container .checkbox-text {
+  margin-right: 24px;
+  font-size: 12px;
+  color: #949BBC;
+}
+
+.card-containerx {
+  margin-top: 32px;
+  width: 535px;
+}
+.each-card {
+  background: white;
+  box-shadow: rgb(237, 231, 231) 0px 1px 8px 0px;
+  padding: 24px;
+  margin: 10px;
+}
+.each-card > h3 {
+  color: #3E4977;
+  margin: 0;
+}
+.right-container > .cat-test{
+  font-size: 20px;
+}
+.right-container > h3 {
+  color: #3E4977;
+  font-size: 13px;
+  margin: 0;
+}
+.small-card > h4 {
+  color: #949BBC;
+  font-size: 14px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+.small-card > p {
+  font-size: 13px;
+  color: #949BBC;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.inc-dec {
+  color: #3FCA3C;
+  font-weight: 800;
+  font-size: 15px;
+}
+.small-card-container {
+  display: flex;
+}
+.small-card {
+  padding-right: 24px;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -33,7 +142,18 @@
 .App-link {
   color: #61dafb;
 }
-
+.filter-error{
+  font-size: large;
+  color: #949BBC;
+  justify-content: center;
+  align-self: end;
+}
+.no-filter-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 70px
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
