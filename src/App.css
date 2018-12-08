@@ -39,19 +39,17 @@ body {
   color: #747EA9;
   font-size: 13px;
   flex-basis: 150px;
-  margin-left: 8px;
   font-weight: bolder;
 }
 .left-container {
   flex-basis: 30%;
   height: 100vh;
-  padding: 20px;
-  padding-top: 100px;
+  padding: 65px 20px 20px;
   background: white;
   box-shadow: rgb(237,231,231) 0px 1px 8px 0px;
-    margin-top: 65px;
-    width: 30%;
-    position: fixed;
+  width: 30%;
+  position: fixed;
+  overflow-y: scroll;
 }
 .right-container {
   flex-basis: 70%;
@@ -99,7 +97,7 @@ body {
 
 .checkbox-container {
   display: flex;
-  margin-top: 24px;
+  margin-top: 10px;
 }
 .checkbox-container .checkbox-text {
   margin-right: 24px;
@@ -107,16 +105,24 @@ body {
   font-size: 12px;
   color: #949BBC;
 }
-
+.graph-card{
+  padding-top: 10px;
+  background: white;
+  box-shadow: rgb(237, 231, 231) 0px 1px 8px 0px;
+}
 .card-containerx {
   margin-top: 32px;
   width: 535px;
+}
+.card-small {
+  min-width: 200px;
 }
 .each-card {
   background: white;
   box-shadow: rgb(237, 231, 231) 0px 1px 8px 0px;
   padding: 24px;
   margin: 10px;
+  min-width: 150px;
 }
 .each-card > h3 {
   color: #3E4977;
@@ -181,6 +187,7 @@ body {
 }
 .filter-details > div {
     display: flex;
+  overflow-x: scroll;
 }
 .no-filter-wrapper{
   display: flex;

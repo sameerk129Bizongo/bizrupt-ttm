@@ -2,6 +2,7 @@ import React from 'react'
 import { Line } from '@nivo/line'
 import SellerData from "./data/SellerData";
 import {Button, Checkbox, ButtonToolbar} from "react-bootstrap";
+import './App.css';
 
 const colors = ['#fae04d', '#ff744c', '#789792', '#b1646a', '#efa9a1', '#8470c7', '#97a66f'];
 
@@ -40,7 +41,7 @@ class GraphView extends React.Component {
 		return (
 			<div className={'filter-details'}>
 				<h3 style={{fontSize:22, color:'#3E4977',marginTop:30,marginLeft:14}}>Selling - West </h3>
-				<div>
+				<div className="graph-card">
 				<Line
 					width={360}
 					height={400}
@@ -95,15 +96,15 @@ class GraphView extends React.Component {
 							bottom: 60,
 							left: 80
 						}}
-						data={[{id: 'positive :)',data: [
-								{x: 0,y: 0.7},
-								{x: 1,y: 0.9},
-								{x: 2,y: 0.8},
-							]},{id: 'Delay :(',data: [
-						{x: 5,y: 0},
-						{x: 6,y: -0.3},
-						{x: 7,y: -0.5},
-							]},{id:'on Time',data:[{x:3,y:0.6},{x:4,y:0.4},{x:4.7,y:0.2}]}]}
+						data={[{id: 'Maximum ',data: [
+								{x: 1.5,y: 0.7},
+								{x: 2,y: 0.9},
+								{x: 2.5,y: 0.8},
+							]},{id: 'Average',data: [
+						{x: 1.5,y: 0},
+						{x: 2,y: -0.3},
+						{x: 2.5,y: -0.5},
+							]},{id:'Minimum',data:[{x:1.5,y:0.6},{x:2,y:0.4},{x:2.5,y:0.2}]}]}
 						animate
 						curve="monotoneX"
 						enableDotLabel
@@ -125,7 +126,7 @@ class GraphView extends React.Component {
 					/>
 				</div>
 				<h3 style={{fontSize:22, color:'#3E4977',marginTop:30,marginLeft:14}}>Order To Delivery - West </h3>
-				<div>
+				<div className="graph-card">
 					<Line
 						width={500}
 						height={400}

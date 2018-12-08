@@ -125,7 +125,7 @@ class App extends Component {
 	    selectedProduct,
 	    selectedDimension, } = this.state;
     if (filters['spec']) {
-	    let data = database.getOneMonth( selectedCategory, selectedSubCategory, selectedProduct, selectedDimension, filters['spec']);
+	    let data = database.getOneYear( selectedCategory, selectedSubCategory, selectedProduct, selectedDimension, filters['spec']);
       console.log('data');
       console.log(data);
       this.setState({showReport: true, reportData:data});
