@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import FilterSidebar from './FilterSidebar';
 import {databaseFunc} from './database';
+import ResultContainer from "./ResultContainer";
 
 const database = databaseFunc();
 
@@ -14,6 +15,14 @@ class App extends Component {
       selectedSubCategory: '',
       selectedProduct: '',
       selectedDimension: '',
+      showReport: false,
+      reportData: {},
+      filters: {
+        sellingCost: false,
+        orderToDelivery: false,
+        orderSupplier: false,
+        overview: true,
+      }
     };
 
     this.selectCategory = this.selectCategory.bind(this);
@@ -26,6 +35,16 @@ class App extends Component {
     this.getDimensions = this.getDimensions.bind(this);
     this.getSpecs = this.getSpecs.bind(this);
   }
+  toggleFilter = filter => {
+    this.setState(prevState => {
+      return {
+        filters: {
+          ...prevState.filters,
+          [filter]: !prevState.filters[filter]
+        }
+      };
+    }, ()=>console.log('applied filter', this.state.filters));
+  };
 
   getSubCategories() {
     console.log('getSubCategories');
@@ -99,11 +118,24 @@ class App extends Component {
   applyFilter(filters) {
     console.log('applyFilter');
     console.dir(filters);
+    const { selectedCategory,
+	    selectedSubCategory,
+	    selectedProduct,
+	    selectedDimension, } = this.state;
+    if (filters['spec']) {
+	    let data = database.getOneMonth( selectedCategory, selectedSubCategory, selectedProduct, selectedDimension, filters['spec'])
+      console.log('data');
+      console.log(data);
+      this.setState({showReport: true, reportData:data});
+    }
+    else {
+      console.error('sku selected probably');
+    }
   }
 
   render() {
     return (
-      <div className="App">
+      <div className={'containerx'}>
         <FilterSidebar
           selectedCategory={this.state.selectedCategory}
           selectedSubCategory={this.state.selectedSubCategory}
@@ -120,6 +152,12 @@ class App extends Component {
           onDimensionSelection={this.selectDimension}
           onFilterApply={this.applyFilter}
         />
+        {
+          this.state.showReport && <ResultContainer toggleFilter={this.toggleFilter}
+                                  filters={this.state.filters}
+                                  data={this.state.reportData} regions={['North', 'West']}/>
+        }
+        {/*<ResultContainer />*/}
       </div>
     );
   }

@@ -76,7 +76,7 @@ export const databaseFunc = () => {
   };
 
   return {
-    getCategoriesList, getSubCategoriesList, getProductsList, getDimensionsList, getSpecsList
+    getCategoriesList, getSubCategoriesList, getProductsList, getDimensionsList, getSpecsList, getOneMonth
   }
 
 };
