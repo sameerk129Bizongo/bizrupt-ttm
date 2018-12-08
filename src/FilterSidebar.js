@@ -131,14 +131,7 @@ class FilterSidebar extends Component{
               placeholder="Enter Specs"
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct || !this.props.selectedDimension}
             />
-            <ControlLabel className="dropdown-text-bold">SKU</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.sku}
-              placeholder="Enter Dimensions"
-              onChange={this.handleSkuInput}
-            />
-            <Button onClick={this.handleApplyFilterClick}>Apply</Button>
+            <Button style={{marginTop:12, color:'#949BBC', fontSize:14}} onClick={this.handleApplyFilterClick}>Apply</Button>
           </FormGroup>
         </Form>
       </div>

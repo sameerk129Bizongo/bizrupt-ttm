@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Checkbox from "react-bootstrap/es/Checkbox";
 import moment from 'moment';
 import './App.css';
+import { Radio } from 'react-bootstrap';
+import GraphView from "./GraphView";
 
 const RegionalWiseSellingCost = ({data, region}) => {
 	if(data){
@@ -94,6 +96,12 @@ const OrderToSupplierReport = ({data, region}) => {
 };
 
 class ResultContainer extends Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			graphMode: false
+		}
+	}
 	getRegionalData = (data, region) => data.filter(x => x.region === region);
 
 	getSellingCostReport = (data, region) => {
@@ -165,6 +173,11 @@ class ResultContainer extends Component {
 	isAtleastOneFilterApplied = () => {
 		return Object.keys(this.props.filters).reduce((res, curr) => (res || this.props.filters[curr]),false)
 	};
+	setGraphMode = isGraphMode => {
+		this.setState({
+			graphMode: isGraphMode
+		});
+	};
 	render() {
 		console.log('Result container',this.props);
 		const { toggleFilter, filters } = this.props;
@@ -185,7 +198,14 @@ class ResultContainer extends Component {
 							</div>
 						</div>
 					</div>
-
+					<div className="checkbox-container">
+						<Radio onChange={() => this.setGraphMode(false)} checked={!this.state.graphMode}>
+							<span className="checkbox-text">Information</span>
+						</Radio>
+						<Radio onChange={() => this.setGraphMode(true)} checked={this.state.graphMode}>
+							<span className="checkbox-text">Graph</span>
+						</Radio>
+					</div>
 					<div className="checkbox-container">
 						<Checkbox type="checkbox" name="overview" value="overview"
 						          onChange={ () => toggleFilter('overview')}
@@ -213,57 +233,61 @@ class ResultContainer extends Component {
 						{/*<Checkbox type="checkbox" name="supplier" value="Supplier"><span*/}
 							{/*className="checkbox-text">Supplier</span></Checkbox>*/}
 					</div>
-
-					{
-						this.isAtleastOneFilterApplied() ? <div>
+					{!this.state.graphMode ? <div>
 							{
-								(filters['overview'] || filters['sellingCost']) && (
-									<div className="each-card">
-										<h3>Selling Cost</h3>
-										<div className="small-card-container">
-											{
-												this.props.regions.map(region => {
+								this.isAtleastOneFilterApplied() ? <div>
+
+										{
+											(filters['overview'] || filters['sellingCost']) && (
+												<div className="each-card">
+													<h3>Selling Cost</h3>
+													<div className="small-card-container">
+														{
+															this.props.regions.map(region => {
+																return (
+																	<div className="small-card">
+																		<RegionalWiseSellingCost
+																			data={this.getSellingCostReport(this.props.data, region)}
+																			region={region}/>
+																	</div>
+																)
+															})
+														}
+													</div>
+												</div>
+											)
+										}
+										{
+											(filters['overview'] || filters['orderToDelivery']) && (this.props.regions.map(region => {
 													return (
-														<div className="small-card">
-															<RegionalWiseSellingCost
-																data={this.getSellingCostReport(this.props.data, region)}
+														<React.Fragment>
+															<OrderToDeliveryReport
+																data={this.getOrderToDeliveryReport(this.props.data, region)}
 																region={region}/>
-														</div>
+														</React.Fragment>
 													)
 												})
-											}
-										</div>
+											)
+										}
+										{
+											(filters['overview'] || filters['orderSupplier']) && (this.props.regions.map(region => {
+													return (
+														<React.Fragment>
+															<OrderToSupplierReport
+																data={this.getOrderSupplierReport(this.props.data, region)}
+																region={region}/>
+														</React.Fragment>
+													)
+												})
+											)
+										}
+									</div> :
+									<div className={'no-filter-wrapper'}>
+										<p className={'filter-error'}>Apply atleast one filter</p>
 									</div>
-								)
-							}
-							{
-								(filters['overview'] || filters['orderToDelivery']) && (this.props.regions.map(region => {
-										return (
-											<React.Fragment>
-												<OrderToDeliveryReport
-													data={this.getOrderToDeliveryReport(this.props.data, region)}
-													region={region}/>
-											</React.Fragment>
-										)
-									})
-								)
-							}
-							{
-								(filters['overview'] || filters['orderSupplier']) && (this.props.regions.map(region => {
-										return (
-											<React.Fragment>
-												<OrderToSupplierReport
-													data={this.getOrderSupplierReport(this.props.data, region)}
-													region={region}/>
-											</React.Fragment>
-										)
-									})
-								)
 							}
 						</div> :
-							<div className={'no-filter-wrapper'}>
-								<p className={'filter-error'}>Apply atleast one filter</p>
-							</div>
+						<GraphView/>
 					}
 				</div>
 			</div>

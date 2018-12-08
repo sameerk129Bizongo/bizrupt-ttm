@@ -39,37 +39,10 @@ class GraphView extends React.Component {
 	render() {
 		return (
 			<div className={'filter-details'}>
-				<div className={'filter-controls'}>
-					<Checkbox onChange={(event) => this.toggleFilter('sellingCost', event)} checked={this.state.filterToggles['sellingCost']}>
-						Selling cost
-					</Checkbox>
-					<Checkbox onChange={(event) => this.toggleFilter('grossIncome', event)} checked={this.state.filterToggles['grossIncome']}>
-						gross income
-					</Checkbox>
-					<Checkbox onChange={(event) => this.toggleFilter('eod', event)} checked={this.state.filterToggles['eod']}>
-						eod
-					</Checkbox>
-					<Button bsStyle={'primary'} onClick={() => this.applyFilter()}>
-						Apply
-					</Button>
-				</div>
+				<h3 style={{fontSize:22, color:'#3E4977',marginTop:30,marginLeft:14}}>Selling - West </h3>
 				<div>
-					<div style={{}}>
-						<div>
-							Quadrent 1
-						</div>
-						<div>
-							Quadrent 2
-						</div>
-						<div>
-							Quadrent 3
-						</div>
-						<div>
-							Quadrent 4
-						</div>
-					</div>
 				<Line
-					width={900}
+					width={360}
 					height={400}
 					margin={{
 						top: 20,
@@ -91,8 +64,142 @@ class GraphView extends React.Component {
 							{color: 'hsl(226, 70%, 50%)',x: 'SR',y: 8},
 							]},
 						]}
+					legends={[
+						{
+							"anchor": "bottom-right",
+							"direction": "column",
+							"translateX": 100,
+							"itemWidth": 80,
+							"itemHeight": 20,
+							"itemTextColor": "#999",
+							"symbolSize": 12,
+							"symbolShape": "circle",
+							"effects": [
+								{
+									"on": "hover",
+									"style": {
+										"itemTextColor": "#000"
+									}
+								}
+							]
+						}
+					]}
 					animate
 				/>
+					<Line
+						width={400}
+						height={400}
+						margin={{
+							top: 20,
+							right: 20,
+							bottom: 60,
+							left: 80
+						}}
+						data={[{id: 'positive :)',data: [
+								{x: 0,y: 0.7},
+								{x: 1,y: 0.9},
+								{x: 2,y: 0.8},
+							]},{id: 'Delay :(',data: [
+						{x: 5,y: 0},
+						{x: 6,y: -0.3},
+						{x: 7,y: -0.5},
+							]},{id:'on Time',data:[{x:3,y:0.6},{x:4,y:0.4},{x:4.7,y:0.2}]}]}
+						animate
+						curve="monotoneX"
+						enableDotLabel
+						dotSize={14}
+						dotBorderWidth={1}
+						dotBorderColor="inherit:darker(0.3)"
+						dotLabelYOffset={-20}
+						enableGridX={false}
+						colors={['rgb(97, 205, 187)','rgb(244, 117,96)','rgb(244, 227, 196)']}
+						xScale={{type: 'linear'}}
+						yScale={{
+							type: 'linear',
+							stacked: false,
+							min: -1,
+							max: 1
+						}}
+						enableArea
+						areaOpacity={0.07}
+					/>
+				</div>
+				<h3 style={{fontSize:22, color:'#3E4977',marginTop:30,marginLeft:14}}>Order To Delivery - West </h3>
+				<div>
+					<Line
+						width={500}
+						height={400}
+						margin={{
+							top: 20,
+							right: 20,
+							bottom: 60,
+							left: 80
+						}}
+						data={[{id: 'Order to ProcurementA',data: [
+								{x: '2018-01-01',y: 1},
+								{x: '2018-01-02',y: 2},
+								{x: '2018-01-03',y: 3},
+							]},
+							{id: 'Raw Material to Production',data: [
+						{x: '2018-01-03',y: 3},
+						{x: '2018-01-03',y: 3},
+						{x: '2018-01-03',y: 3},
+							]},
+							{id: 'Production Start to Dispatch',data: [
+									{x: '2018-01-03',y: 3},
+									{x: '2018-01-05',y: 5},
+									{x: '2018-01-06',y: 6},
+								]}
+							]}
+						animate
+						xScale={{type: 'time',format: '%Y-%m-%d',precision: 'day'}}
+						yScale={{type: 'linear',stacked: false}}
+						axisBottom={{format: '%b %d'}}
+						curve="step"
+						enableDotLabel
+						dotSize={16}
+						colors={['rgb(97, 205, 187)','rgb(244, 117,96)','rgb(244, 227,' +
+						' 196)','rgb(97,244,81)']}
+						dotBorderWidth={1}
+						dotBorderColor="inherit:darker(0.3)"
+					/>
+					<Line
+						width={400}
+						height={400}
+						margin={{
+							top: 20,
+							right: 20,
+							bottom: 60,
+							left: 80
+						}}
+						data={[{id: 'positive :)',data: [
+								{x: 0,y: 0.7},
+								{x: 1,y: 0.9},
+								{x: 2,y: 0.8},
+							]},{id: 'Delay :(',data: [
+								{x: 5,y: 0},
+								{x: 6,y: -0.3},
+								{x: 7,y: -0.5},
+							]},{id:'on Time',data:[{x:3,y:0.6},{x:4,y:0.4},{x:4.7,y:0.2}]}]}
+						animate
+						curve="monotoneX"
+						enableDotLabel
+						dotSize={14}
+						dotBorderWidth={1}
+						dotBorderColor="inherit:darker(0.3)"
+						dotLabelYOffset={-20}
+						enableGridX={false}
+						colors={['rgb(97, 205, 187)','rgb(244, 117,96)','rgb(244, 227, 196)']}
+						xScale={{type: 'linear'}}
+						yScale={{
+							type: 'linear',
+							stacked: false,
+							min: -1,
+							max: 1
+						}}
+						enableArea
+						areaOpacity={0.07}
+					/>
 				</div>
 			</div>
 		);
