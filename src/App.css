@@ -3,10 +3,29 @@
   display: flex;
 }
 
+#root {
+    background: #F2F4F8;
+}
+.header {
+    height: 60px;
+    width: 100%;
+    background: #047eff;
+    position: fixed;
+    z-index: 100;
+}
+
+.input-dropdown {
+    color: #3e4977 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    margin-top: 32px !important;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   background: #F2F4F8;
 }
+
 .containerx {
   background: #F2F4F8;
   display: flex;
@@ -22,15 +41,24 @@ body {
   font-weight: bolder;
 }
 .left-container {
-  flex-basis: 40%;
+  flex-basis: 30%;
   height: 100vh;
   padding: 20px;
   padding-top: 100px;
-  background: #F2F4F8;
+  background: white;
+  box-shadow: rgb(237,231,231) 0px 1px 8px 0px;
+    margin-top: 65px;
+    width: 30%;
+    position: fixed;
 }
 .right-container {
   flex-basis: 70%;
-  margin-left: 24px;
+    width: 70%;
+    min-height: 100vh;
+    margin-left: 30%;
+    margin-top: 65px;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 .right-container > h2 {
   color: #3E4977;

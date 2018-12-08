@@ -135,30 +135,35 @@ class App extends Component {
 
   render() {
     return (
-      <div className={'containerx'}>
-        <FilterSidebar
-          selectedCategory={this.state.selectedCategory}
-          selectedSubCategory={this.state.selectedSubCategory}
-          selectedProduct={this.state.selectedProduct}
-          selectedDimension={this.state.selectedDimension}
-          categoriesList={database.getCategoriesList()}
-          subCategoriesList={this.getSubCategories()}
-          productsList={this.getProducts()}
-          dimensionsList={this.getDimensions()}
-          specsList={this.getSpecs()}
-          onCategorySelection={this.selectCategory}
-          onSubCategorySelection={this.selectSubCategory}
-          onProductSelection={this.selectProduct}
-          onDimensionSelection={this.selectDimension}
-          onFilterApply={this.applyFilter}
-        />
-        {
-          this.state.showReport && <ResultContainer toggleFilter={this.toggleFilter}
-                                  filters={this.state.filters}
-                                  data={this.state.reportData} regions={['North', 'West']}/>
-        }
-        {/*<ResultContainer />*/}
+      <React.Fragment>
+        <div className="header">
+
+        </div>
+        <div className="containerx">
+          <FilterSidebar
+            selectedCategory={this.state.selectedCategory}
+            selectedSubCategory={this.state.selectedSubCategory}
+            selectedProduct={this.state.selectedProduct}
+            selectedDimension={this.state.selectedDimension}
+            categoriesList={database.getCategoriesList()}
+            subCategoriesList={this.getSubCategories()}
+            productsList={this.getProducts()}
+            dimensionsList={this.getDimensions()}
+            specsList={this.getSpecs()}
+            onCategorySelection={this.selectCategory}
+            onSubCategorySelection={this.selectSubCategory}
+            onProductSelection={this.selectProduct}
+            onDimensionSelection={this.selectDimension}
+            onFilterApply={this.applyFilter}
+          />
+          {
+            this.state.showReport ? <ResultContainer
+              toggleFilter={this.toggleFilter}
+              filters={this.state.filters}
+              data={this.state.reportData} regions={['North', 'West']}/> : <div className="right-container"/>
+          }
       </div>
+      </React.Fragment>
     );
   }
 }

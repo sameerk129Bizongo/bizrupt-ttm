@@ -182,7 +182,6 @@ class ResultContainer extends Component {
 		console.log('Result container',this.props);
 		const { toggleFilter, filters } = this.props;
 		return (
-			<div className="container">
 				<div className="right-container">
 					<h2>Report</h2>
 
@@ -290,7 +289,6 @@ class ResultContainer extends Component {
 						<GraphView/>
 					}
 				</div>
-			</div>
 		);
 	}
 }

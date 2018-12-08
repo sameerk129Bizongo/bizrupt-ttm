@@ -91,7 +91,7 @@ class FilterSidebar extends Component{
       <div className="left-container">
         <Form>
           <FormGroup>
-            <ControlLabel className="dropdown-text-bold">Category</ControlLabel>
+            <ControlLabel className="input-dropdown dropdown-text-bold">Category</ControlLabel>
             <FormControl
               onChange={this.onSelectCategory}
               value={this.props.selectedCategory}
@@ -100,7 +100,7 @@ class FilterSidebar extends Component{
               <option value={null} defaultValue>Select...</option>
               {this.renderCategories()}
             </FormControl>
-            <ControlLabel className="dropdown-text-bold">SubCategory</ControlLabel>
+            <ControlLabel className="input-dropdown dropdown-text-bold">SubCategory</ControlLabel>
             <FormControl
               disabled={!this.props.selectedCategory}
               onChange={this.onSelectSubCategory}
@@ -110,28 +110,35 @@ class FilterSidebar extends Component{
               <option value={null} defaultValue>Select...</option>
               {this.renderSubCategories()}
             </FormControl>
-            <ControlLabel className="dropdown-text-bold">Product Name</ControlLabel>
+            <ControlLabel className="input-dropdown dropdown-text-bold">Product Name</ControlLabel>
             <Typeahead
               options={this.props.productsList}
               onChange={this.handleProductNameInput}
               placeholder="Enter Product Name"
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory}
             />
-            <ControlLabel className="dropdown-text-bold">Dimension</ControlLabel>
+            <ControlLabel className="input-dropdown dropdown-text-bold">Dimension</ControlLabel>
             <Typeahead
               options={this.props.dimensionsList}
               onChange={this.handleDimensionInput}
               placeholder="Enter Dimension"
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct}
             />
-            <ControlLabel className="dropdown-text-bold">Specification</ControlLabel>
+            <ControlLabel className="input-dropdown dropdown-text-bold">Specification</ControlLabel>
             <Typeahead
               options={this.props.specsList}
               onChange={this.handleSpecInput}
               placeholder="Enter Specs"
               disabled={!this.props.selectedCategory || !this.props.selectedSubCategory || !this.props.selectedProduct || !this.props.selectedDimension}
             />
-            <Button style={{marginTop:12, color:'#949BBC', fontSize:14}} onClick={this.handleApplyFilterClick}>Apply</Button>
+            <Button block style={{ color:'white', fontSize:14, paddingLeft: "16px",
+              paddingRight: "16px",
+              background: "#0486ff",
+              lineHeight: "30px",
+              marginTop: "32px",
+              fontWeight: 600}} onClick={this.handleApplyFilterClick}>
+              Generate Report
+            </Button>
           </FormGroup>
         </Form>
       </div>
