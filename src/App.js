@@ -3,6 +3,8 @@ import './App.css';
 import FilterSidebar from './FilterSidebar';
 import {databaseFunc} from './database';
 import ResultContainer from "./ResultContainer";
+import Logo from './assets/metricplus_logo.svg';
+import NoData from './assets/nodata.png';
 
 const database = databaseFunc();
 
@@ -123,7 +125,7 @@ class App extends Component {
 	    selectedProduct,
 	    selectedDimension, } = this.state;
     if (filters['spec']) {
-	    let data = database.getOneMonth( selectedCategory, selectedSubCategory, selectedProduct, selectedDimension, filters['spec'])
+	    let data = database.getOneMonth( selectedCategory, selectedSubCategory, selectedProduct, selectedDimension, filters['spec']);
       console.log('data');
       console.log(data);
       this.setState({showReport: true, reportData:data});
@@ -137,7 +139,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <div className="header">
-
+          <img src={Logo} style={{height: "26px", marginLeft: "32px"}}/>
         </div>
         <div className="containerx">
           <FilterSidebar
@@ -160,7 +162,12 @@ class App extends Component {
             this.state.showReport ? <ResultContainer
               toggleFilter={this.toggleFilter}
               filters={this.state.filters}
-              data={this.state.reportData} regions={['North', 'West']}/> : <div className="right-container"/>
+              data={this.state.reportData} regions={['North', 'West']}/> :
+              <div className="right-container" style={{display: "flex",
+                alignItems: "center",
+                justifyContent: "center"}}>
+                <img src={NoData}/>
+              </div>
           }
       </div>
       </React.Fragment>

@@ -4,6 +4,7 @@ import moment from 'moment';
 import './App.css';
 import { Radio } from 'react-bootstrap';
 import GraphView from "./GraphView";
+import DropdowSVG from './assets/dropdown.svg';
 
 const RegionalWiseSellingCost = ({data, region}) => {
 	if(data){
@@ -188,12 +189,12 @@ class ResultContainer extends Component {
 					<div className="right-filter">
 						<div className="dropdown">
 							<div className="dropdown-text">Last 30 days</div>
-							<div className="dropdown-arrow"><img src="img/dropdown.svg"/>
+							<div className="dropdown-arrow"><img src={DropdowSVG}/>
 							</div>
 						</div>
 						<div className="dropdown">
 							<div className="dropdown-text">PAN India</div>
-							<div className="dropdown-arrow"><img src="img/dropdown.svg"/>
+							<div className="dropdown-arrow"><img src={DropdowSVG}/>
 							</div>
 						</div>
 					</div>

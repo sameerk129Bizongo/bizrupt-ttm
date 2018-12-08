@@ -12,6 +12,8 @@
     background: #047eff;
     position: fixed;
     z-index: 100;
+    display: flex;
+    align-items: center
 }
 
 .input-dropdown {
