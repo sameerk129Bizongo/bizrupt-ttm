@@ -9,13 +9,27 @@ import DropdowSVG from './assets/dropdown.svg';
 const RegionalWiseSellingCost = ({data, region}) => {
 	if(data){
 		return (
-			<React.Fragment>
+			<div className="small-card">
 				<h4>{region} Region</h4>
-				<p><span className="inc-dec">1.2% </span>increase</p>
 				<p><strong>Minimum: </strong><span>{data['min']}</span></p>
 				<p><strong>Average: </strong><span>{data['avg']}</span></p>
 				<p><strong>Maximum: </strong><span>{data['max']}</span></p>
-			</React.Fragment>
+			</div>
+		)
+	} else {
+		return null
+	}
+};
+
+const ContributionReport = ({data, region}) => {
+	if(data){
+		return (
+			<div className="small-card">
+				<h4>{region} Region</h4>
+				<p><strong>Minimum: </strong><span>{data['min']}</span></p>
+				<p><strong>Average: </strong><span>{data['avg']}</span></p>
+				<p><strong>Maximum: </strong><span>{data['max']}</span></p>
+			</div>
 		)
 	} else {
 		return null
@@ -29,7 +43,7 @@ const OrderToDeliveryReport = ({data, region}) => {
 			return (
 				<div>
 			<h3 style={{fontSize:22, color:'#3E4977',marginTop:30,marginLeft:14}}>Order To Delivery - {region} </h3>
-					<div style={{display:'flex', width:'100%', overflowX: 'auto', justifyContent: 'space-around'}}>
+					<div style={{display:'flex', width:'100%', overflowX: 'auto'}}>
 				{
 					Object.keys(data).map(i => {
 						console.log('data[i]', data[i]);
@@ -75,7 +89,6 @@ const OrderToSupplierReport = ({data, region}) => {
 							console.log('data[i]', data[i]);
 							return (
 								<div className="each-card">
-									<div className="small-card-container">
 										<div className="small-card">
 											<p><strong>Quantity: </strong><span>{data[i]['quantity']}</span>
 											</p>
@@ -83,7 +96,6 @@ const OrderToSupplierReport = ({data, region}) => {
 											</p>
 											<p><strong>Seller: </strong><span>{data[i]['seller_name']}</span></p>
 										</div>
-									</div>
 								</div>
 							);
 						})
@@ -103,7 +115,7 @@ class ResultContainer extends Component {
 			graphMode: false
 		}
 	}
-	getRegionalData = (data, region) => data.filter(x => x.region === region);
+	getRegionalData = (data, region) => data ? data.filter(x => x.region === region) : [];
 
 	getSellingCostReport = (data, region) => {
 		console.log('data', data);
@@ -118,6 +130,27 @@ class ResultContainer extends Component {
 				result.avg = (( parseInt(res.avg,10) + parseInt(curr.selling_price_per_unit, 10)));
 				if (curr.selling_price_per_unit > res.max){
 					result['max'] = curr.selling_price_per_unit
+				}
+				console.log('result', result);
+				return result;
+			},{min:100000,avg:0,max:0});
+			x['avg'] = x['avg']/data.length;
+			return x;
+		}
+	};
+	getReport = (data, region, field) => {
+		console.log('data', data);
+		let filteredData = this.getRegionalData(data, region);
+		if(filteredData.length > 0){
+			let x = filteredData.reduce((res, curr, index) => {
+				let result = {...res};
+				// console.log('round', index, 'res', res, 'curr', curr);
+				if (curr[field] < res.min){
+					result['min'] = curr[field]
+				}
+				result.avg = (( parseInt(res.avg,10) + parseInt(curr[field], 10)));
+				if (curr[field] > res.max){
+					result['max'] = curr[field]
 				}
 				console.log('result', result);
 				return result;
@@ -188,12 +221,12 @@ class ResultContainer extends Component {
 
 					<div className="right-filter">
 						<div className="dropdown">
-							<div className="dropdown-text">Last 30 days</div>
+							<div className="dropdown-text">Last 1 Year</div>
 							<div className="dropdown-arrow"><img src={DropdowSVG}/>
 							</div>
 						</div>
 						<div className="dropdown">
-							<div className="dropdown-text">PAN India</div>
+							<div className="dropdown-text">West Region</div>
 							<div className="dropdown-arrow"><img src={DropdowSVG}/>
 							</div>
 						</div>
@@ -216,10 +249,7 @@ class ResultContainer extends Component {
 						          onChange={ () => toggleFilter('sellingCost')}
 						          checked={filters['sellingCost']}
 						       value="Selling Cost"><span className="checkbox-text">Selling Cost</span></Checkbox>
-						{/*<Checkbox type="checkbox" name="gross_margin"*/}
-						       {/*value="Gross Margin"><span className="checkbox-text">Gross Margin</span></Checkbox>*/}
-						{/*<Checkbox type="checkbox" name="lead_time" value="Lead Time"><span*/}
-							{/*className="checkbox-text">Lead Time</span></Checkbox>*/}
+
 						<Checkbox type="checkbox" name="order_to_delivery"
 						       value="Order To Delivery"
 						          onChange={ () => toggleFilter('orderToDelivery')}
@@ -230,26 +260,23 @@ class ResultContainer extends Component {
 						          checked={filters['orderSupplier']}
 						><span
 							className="checkbox-text">Order and Supplier</span></Checkbox>
-						{/*<Checkbox type="checkbox" name="supplier" value="Supplier"><span*/}
-							{/*className="checkbox-text">Supplier</span></Checkbox>*/}
+
 					</div>
 					{!this.state.graphMode ? <div>
 							{
 								this.isAtleastOneFilterApplied() ? <div>
-
+									<div style={{display: 'flex',overflowX:'auto'}}>
 										{
 											(filters['overview'] || filters['sellingCost']) && (
-												<div className="each-card">
+												<div className="each-card card-small" style={{minWidth:240}}>
 													<h3>Selling Cost</h3>
 													<div className="small-card-container">
 														{
 															this.props.regions.map(region => {
 																return (
-																	<div className="small-card">
 																		<RegionalWiseSellingCost
 																			data={this.getSellingCostReport(this.props.data, region)}
 																			region={region}/>
-																	</div>
 																)
 															})
 														}
@@ -257,6 +284,61 @@ class ResultContainer extends Component {
 												</div>
 											)
 										}
+										{
+											(filters['overview'] || filters['sellingCost']) && (
+												<div className="each-card card-small" style={{minWidth:240}}>
+													<h3>Contribution Margin</h3>
+													<div className="small-card-container">
+														{
+															this.props.regions.map(region => {
+																return (
+																		<ContributionReport
+																			data={this.getReport(this.props.data, region, 'contribution_margin_per_unit')}
+																			region={region}/>
+																)
+															})
+														}
+													</div>
+												</div>
+											)
+										}
+										{
+											(filters['overview'] || filters['sellingCost']) && (
+												<div className="each-card card-small" style={{minWidth:240}}>
+													<h3>Logistic Charges</h3>
+													<div className="small-card-container">
+														{
+															this.props.regions.map(region => {
+																return (
+																		<ContributionReport
+																			data={this.getReport(this.props.data, region, 'logistic_charges_per_unit')}
+																			region={region}/>
+																)
+															})
+														}
+													</div>
+												</div>
+											)
+										}
+										{
+											(filters['overview'] || filters['sellingCost']) && (
+												<div className="each-card card-small" style={{minWidth:240}}>
+													<h3>Gross Margin</h3>
+													<div className="small-card-container">
+														{
+															this.props.regions.map(region => {
+																return (
+																		<ContributionReport
+																			data={this.getReport(this.props.data, region, 'gross_margin_per_unit')}
+																			region={region}/>
+																)
+															})
+														}
+													</div>
+												</div>
+											)
+										}
+									</div>
 										{
 											(filters['overview'] || filters['orderToDelivery']) && (this.props.regions.map(region => {
 													return (
