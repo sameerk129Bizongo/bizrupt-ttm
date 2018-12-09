@@ -1,4 +1,4 @@
-import {capitalizeFirstLetter} from './utils';
+import {capitalizeFirstLetter} from '../utils';
 const database = require('./data.json');
 const category_data = database['category'];
 const sku_data = database['sku'];

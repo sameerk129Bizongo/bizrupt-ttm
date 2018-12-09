@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import FilterSidebar from './FilterSidebar';
-import {databaseFunc} from './database';
+import {databaseFunc} from './data/database';
 import ResultContainer from "./ResultContainer";
 import Logo from './assets/metricplus_logo.svg';
 import NoData from './assets/nodata.png';
